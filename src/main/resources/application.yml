@@ -1,0 +1,101 @@
+spring:
+  # thymeleaf
+  thymeleaf:
+    cache: false
+    #
+    prefix: classpath:/templates/
+    suffix: .html
+    enabled: true
+    encoding: utf-8
+    mode: HTML5
+    servlet:
+      content-type: text/html
+
+  web:
+    # 静态资源配置
+    resources:
+      add-mappings: true
+      cache:
+        period: 3600
+      chain:
+        cache: true
+        enabled: true
+        compressed: true
+      static-locations: classpath:/static/
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/miaosha?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    hikari:
+      pool-name: DateHikariCP
+      minimum-idle: 5
+      idle-timeout: 1800000
+      maximum-pool-size: 10
+      auto-commit: true
+      max-lifetime: 1800000
+      connection-timeout: 3000
+      connection-test-query: SELECT 1
+#    hikari:
+#      pool-name: DateHikariCP
+#      #
+#      minimum-idle: 5
+#      #
+#      idle-timeout: 1800000
+#      #
+#      auto-commit: true
+#      #
+#      max-lifetime: 1800000
+#      #
+#      connection-timeout: 3000
+#      #
+#      connection-test-query: SELECT 1
+
+  redis:
+    host: 8.142.66.239
+#    host: 127.0.0.1
+    port: 6379
+
+    database: 0
+
+
+    connect-timeout: 10000ms
+
+    lettuce:
+      pool:
+
+        max-active: 8
+
+        max-wait: 1000ms
+
+        max-idle: 200
+
+        min-idle: 5
+
+  # rabbitmq
+  rabbitmq:
+    host: 8.142.66.239
+#    host: localhost
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: /
+    listener:
+      simple:
+        # 消费者
+        concurrency: 10
+        max-concurrency: 10
+        # 每次取队列几个
+        prefetch: 1
+        # 入队失败后是否重新入队
+        default-requeue-rejected: true
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  type-aliases-package: com.example.miaosha.pojo
+
+
+logging:
+  level:
+    com.example.miaosha.mapper: debug
